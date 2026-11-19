@@ -4,7 +4,7 @@
 |---|---|
 | **Fecha de inicio** | 09/11/2026 |
 | **Fecha de fin** | 16/11/2026 |
-| **Tiempo dedicado** | 1 horas |
+| **Tiempo dedicado** | 5 horas |
 | **Rama de Git** | `tema01` |
 
 ---
@@ -22,39 +22,94 @@ Instalacion del proyecto con Docker y creacion del proyecto laravel.
      - El comando o el código, en un bloque de código (nunca como captura).
      - Una captura solo si aporta algo visual (navegador, resultado, estructura...). -->
 
-### 2.1 [Nombre del paso]
+### 2.1 Creacion de vistas
 
-Explicación de lo que hago y para qué sirve.
+Se van a crear 3 vistas llamadas : home ,about , contact.
 
-```bash
-php artisan make:model Producto -m
-```
-
-Fragmento de código relevante (indica el archivo):
+Vista *about.blade.php*
 
 ```php
-// proyecto/app/Models/Producto.php
-class Producto extends Model
-{
-    protected $fillable = ['nombre', 'precio'];
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de</title>
+</head>
+<body>
+    <h1>Acerca de</h1>
+    <nav>
+        <a href="/">Inicio</a> |
+        <a href="/about">Acerca de</a> |
+        <a href="/contact">Contacto</a>
+    </nav>
+    <p>Esta es la página de información sobre el proyecto.</p>
+</body>
+</html>
 ```
 
-![Descripción de la captura](img/temaXX/01-descripcion.png)
+Vista *home.blade.php*
 
-### 2.2 [Nombre del paso]
+```php
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+</head>
+<body>
+    <h1>Bienvenido a mi proyecto Laravel</h1>
+    <nav>
+        <a href="/">Inicio</a> |
+        <a href="/about">Acerca de</a> |
+        <a href="/contact">Contacto</a>
+    </nav>
+    <p>Esta es la página de inicio del proyecto.</p>
+</body>
+</html>
+```
 
-...
+Vista *contact.blade.php*
 
+```php
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto</title>
+</head>
+<body>
+    <h1>Contacto</h1>
+    <nav>
+        <a href="/">Inicio</a> |
+        <a href="/about">Acerca de</a> |
+        <a href="/contact">Contacto</a>
+    </nav>
+    <p>Esta es la página de contacto.</p>
+    
+</body>
+</html>
+```
+
+
+### 2.2 Definicion de rutas
+
+Se modifica el fichero *routes/web.php* de la siguiente forma :
+```php
+Route::view('/', 'landing.home')->name('home');
+Route::view('/contact', 'landing.contact')->name('contact');
+Route::view('/about', 'landing.about')-> name('about');
+```
 ---
 
 ## 3. 📋 Resumen de comandos utilizados
 
 | Comando | Para qué sirve |
 |---------|----------------|
-| `php artisan ...` | ... |
-| `composer ...` | ... |
-| `git ...` | ... |
+| `composer ...` | Gestor de dependencias de PHP. Se usa para instalar Laravel y sus paquetes necesarios.|
+| `docker-compose ` | Herramienta para definir y ejecutar contenedores Docker. Útil para crear un entorno de desarrollo con Laravel.|
 
 ---
 
@@ -64,42 +119,66 @@ class Producto extends Model
      Copia el error como texto, no como captura.
      Si no has tenido ningún problema, documenta al menos algo que hayas tenido que investigar. -->
 
-### Problema 1: [Descripción corta]
+### Problema 1: Comprobacion del funcionamento de laravel despues de su instalacion
 
-**Qué estaba haciendo:** ...
+**Qué estaba haciendo:** Comprobar el correcto funcionamento de laravel una vez creado el proyecto basico.
 
 **Error:**
 
 ```
-Pega aquí el mensaje de error completo
+Acceso denegado
 ```
 
-**Causa:** por qué ocurría (lo que has entendido, no solo lo que has hecho).
+**Causa:** Posible problema de permisos .
 
 **Solución:**
 
+Ejecutamos en una terminal los seguientes comandos :
+
 ```bash
-comando o cambio que lo resolvió
+docker exec -it proyecto-php-1 bash
+php artisan key:generate
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
 ```
 
-**Fuente:** [enlace a la documentación, foro, vídeo...](https://)
+Poateriormente sera necesario añadir en el fichero *.env* la siguiente configuracion:
+```bash
+Fichero .env:
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=test
+DB_USERNAME=alumno
+DB_PASSWORD=alumno
 
-### Problema 2: [Descripción corta]
+SESSION_DRIVER=file
+ 
+```
 
-...
+**Fuente:** chatGPT.
 
----
 
 ## 5. ✅ Resultado final
 
 <!-- Captura(s) de la aplicación funcionando al terminar el tema. -->
 
-![Resultado final del tema](img/temaXX/99-resultado-final.png)
+
+Vista *about.blade.php*
+
+![Descripción de la captura](img/tema01/01-about.png)
+
+Vista *home.blade.php*
+
+![Descripción de la captura](img/tema01/01-home.png)
+
+Vista *contact.blade.php*
+
+![Descripción de la captura](img/tema01/01-contact.png)
 
 ---
 
 ## 6. 💭 Conclusiones
 
-- **Qué he aprendido:** ...
-- **Qué me ha costado más:** ...
-- **Qué haría diferente / dudas pendientes:** ...
+- **Qué he aprendido:** he aprendido laravel.
+- **Qué me ha costado más:** nada
+- **Qué haría diferente / dudas pendientes:** nada .
