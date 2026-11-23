@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+</head>
+<body>
+    <h1>Bienvenido a mi proyecto Laravel</h1>
+    <nav>
+        <a href="/">Inicio</a> |
+        <a href="/about">Acerca de</a> |
+        <a href="/contact">Contacto</a>
+    </nav>
+    <p>Esta es la página de inicio del proyecto.</p>
+</body>
+</html>
